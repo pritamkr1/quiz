@@ -1,71 +1,65 @@
-let question = [{
-    quiz: 'What is your name?',
-    aOption: 'Pritam Kumar',
-    bOption: 'Shubham Kumar',
-    cOption: 'Rahul Kumar',
-    dOption: 'Raju Kumar',
-}, {
-    quiz: 'where are you from',
-    aOption: 'Hazaribagh',
-    bOption: 'Ranchi',
-    cOption: 'Bokaro',
-    dOption: 'Dhanbaad',
-},{
-    quiz: 'what is your hobby',
-    aOption: 'Playing',
-    bOption: 'Coding',
-    cOption: 'reading',
-    dOption: 'Swimming',
-}, {
-    quiz: 'favourite place',
-    aOption: 'Home',
-    bOption: 'office',
-    cOption: 'Garden',
-    dOption: 'School',
-}];
+const quiz = document.getElementById("quiz");
+const answerEls = document.querySelectorAll(".answer");
+const questionEl = document.getElementById("question");
+const a_text = document.getElementById("a_text");
+const b_text = document.getElementById("b_text");
+const c_text = document.getElementById("c_text");
+const d_text = document.getElementById("d_text");
+const submitBtn = document.getElementById("submit");
 
-//Selecting items
+let currentQuiz = 0;
+let score = 0;
 
-let ourQuestion = document.querySelector('.question-head');
-let optionA = document.querySelector('#a-option');
-let optionB = document.querySelector('#b-option');
-let optionC = document.querySelector('#c-option');
-let optionD = document.querySelector('#d-option');
-let doneMes = document.querySelector('.done');
+loadQuiz();
 
-const submitBtn = document.querySelector('.btn-check');
+function loadQuiz() {
+    deselectAnswers();
 
-let quizNum = 0;
+    const currentQuizData = quizData[currentQuiz];
 
-
-
-function gotSelected(){
-    const answerd = document.querySelectorAll('.anwser');
-    answerd.forEach(function(eachClass){
-    console.log(eachClass.checked);
-    })
-}
-//window.addEventListener('DOMcontentLoaded', function(){}
-firstQuiz();
-
-function firstQuiz(){
-    var showFirstQuiz = question[quizNum];
-    ourQuestion.textContent = showFirstQuiz.quiz;
-    optionA.textContent = showFirstQuiz.aOption;
-    optionB.textContent = showFirstQuiz.bOption;
-    optionC.textContent = showFirstQuiz.cOption;
-    optionD.textContent = showFirstQuiz.dOption;
+    questionEl.innerText = currentQuizData.question;
+    a_text.innerText = currentQuizData.a;
+    b_text.innerText = currentQuizData.b;
+    c_text.innerText = currentQuizData.c;
+    d_text.innerText = currentQuizData.d;
 }
 
-submitBtn.addEventListener('click', function(){
-    gotSelected();
-    quizNum++;
-    if(quizNum < question.length){
-        firstQuiz();
-    } else{
-        var message = 'You are done!!';
-        doneMes.textContent = message;
+function getSelected() {
+    let answer = undefined;
+
+    answerEls.forEach((answerEl) => {
+        if (answerEl.checked) {
+            answer = answerEl.id;
+        }
+    });
+
+    return answer;
+}
+
+function deselectAnswers() {
+    answerEls.forEach((answerEl) => {
+        answerEl.checked = false;
+    });
+}
+
+submitBtn.addEventListener("click", () => {
+    // check to see the answer
+    const answer = getSelected();
+
+    if (answer) {
+        if (answer === quizData[currentQuiz].correct) {
+            score++;
+        }
+
+        currentQuiz++;
+        if (currentQuiz < quizData.length) {
+            loadQuiz();
+        } else {
+            quiz.innerHTML = `
+                <h2>You answered correctly at ${score}/${quizData.length} questions.</h2>
+                
+                <button onclick="location.reload()">Reload</button>
+            `;
+        }
     }
-})
-
-
+});
