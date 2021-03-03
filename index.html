@@ -10,20 +10,24 @@
     <body>
 
         <div class="question-container">
+            <div class="quiz-header">
             <h1 class="question-head">Question text</h1>
 
             <ul>
                 <li>
-                    <input type="radio" name="answer" id="a">
-                    <lable for="a">Question</lable>
+                    <input type="radio" name="answer" id="a" class="anwser">
+                    <label for="a" id="a-option">Question</label>
                 </li>
-                <li><input type="radio" name="answer" id="b">
-                    <lable for="b">Question</lable></li>
-                <li><input type="radio" name="answer" id="c">
-                    <lable for="c">Question</lable></li>
-                <li><input type="radio" name="answer" id="d">
-                    <lable for="d">Question</lable></li>
+                <li><input type="radio" name="answer" id="b" class="anwser">
+                    <label for="b" id="b-option">Question</label></li>
+                <li><input type="radio" name="answer" id="c" class="anwser">
+                    <label for="c" id="c-option">Question</label></li>
+                <li><input type="radio" name="answer" id="d" class="anwser">
+                    <label for="d"id="d-option">Question</label></li>
             </ul>
+        </div>
+        <p style="text-align: center;" class="done"> </p>
+            <button class="btn-check"> Submit</button>  
         </div>
 
         <!--Javascript link-->
